@@ -26,8 +26,8 @@
 <div class="text content">
 	<h1>{data.page.title}</h1>
 
-	<a class="edit" href="https://github.com/sveltejs/kit/edit/master/documentation/{data.page.file}">
-		<Icon size={50} name="edit" /> Edit this page on GitHub
+	<a class="edit" href="https://github.com/crystalshower/kit-id/edit/master/documentation/{data.page.file}">
+		<Icon size={50} name="edit" /> Ubah halaman ini di GitHub
 	</a>
 
 	<section>

@@ -6,7 +6,7 @@
 <Section --background="var(--background-1)">
 	<p class="definition">
 		<em>/ˈsvɛlt/</em> <span class="adjective">adjective</span>
-		<span class="description">attractively thin, graceful and stylish</span>
+		<span class="description">tipis tapi menarik, anggun dan bergaya.</span>
 	</p>
 
 	<div class="grid" style="--columns: 3">
@@ -19,42 +19,43 @@
 					rel="noreferrer"
 					href="https://www.offerzen.com/community/svelte-origins-documentary"
 				>
-					Watch the full Svelte Origins documentary
+					Tonton dokumenter Svelte Origins secara penuh.
 				</a>
 			</p>
 		</div>
 
 		<div>
 			<p>
-				SvelteKit is built on Svelte, a UI framework that uses a compiler to let you write
-				breathtakingly concise components that do minimal work in the browser, using languages you
-				already know — HTML, CSS and JavaScript. <strong
-					>It's a love letter to web development.</strong
+				SvelteKit dibangun di atas Svelte, sebuah framework UI yang menggunakan compiler yang
+				memungkinkan kamu menulis komponen yang sangat singkat dan bekerja minimal di browser
+				menggunakan bahasa yang sudah kamu kenal seperti HTML, CSS, dan JavaScript. <strong
+					>Seperti surat cinta untuk pengembangan web.</strong
 				>
 			</p>
 
 			<p>
-				But don't take our word for it. Developers consistently rank Svelte as the framework they're
+				Jangan hanya percaya pada kata-kata kami. Para developer juga menempatkan Svelte sebagai
+				framework
 				<a
 					target="_blank"
 					rel="noreferrer"
 					href="https://insights.stackoverflow.com/survey/2021#section-most-loved-dreaded-and-wanted-web-frameworks"
 				>
-					most
+					paling
 				</a>
 				<a
 					target="_blank"
 					rel="noreferrer"
 					href="https://tsh.io/state-of-frontend/#which-of-the-following-frameworks-would-you-like-to-learn-in-the-future"
 				>
-					excited
+					menyenangkan
 				</a>
 				<a
 					target="_blank"
 					rel="noreferrer"
 					href="https://2021.stateofjs.com/en-US/libraries/front-end-frameworks/"
 				>
-					about
+					untuk
 				</a>
 
 				<a
@@ -62,7 +63,7 @@
 					rel="noreferrer"
 					href="https://twitter.com/Rich_Harris/status/1589675637195042817"
 				>
-					using</a
+					digunakan</a
 				>.
 			</p>
 		</div>

@@ -1,32 +1,34 @@
 ---
-title: Web standards
+title: Standar Web
 ---
 
-Throughout this documentation, you'll see references to the standard [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API) that SvelteKit builds on top of. Rather than reinventing the wheel, we _use the platform_, which means your existing web development skills are applicable to SvelteKit. Conversely, time spent learning SvelteKit will help you be a better web developer elsewhere.
+Sepanjang dokumentasi ini, kamu akan melihat referensi ke [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API) standar yang SvelteKit bangun di atasnya. Daripada membuatnya lagi, kami _menggunakan platform_, yang berarti keterampilan pengembangan web yang kamu miliki saat ini dapat diterapkan ke SvelteKit. Sebaliknya, waktu yang dihabiskan untuk mempelajari SvelteKit akan membantu kamu menjadi pengembang web yang lebih baik di tempat lain.
 
-These APIs are available in all modern browsers and in many non-browser environments like Cloudflare Workers, Deno and Vercel Edge Functions. During development, and in [adapters](adapters) for Node-based environments (including AWS Lambda), they're made available via polyfills where necessary (for now, that is — Node is rapidly adding support for more web standards).
+API-API ini tersedia pada semua browser modern dan non-browser environments seperti Cloudflare Workers, Deno dan Vercel Edge Functions. Selama tahap pengembangan dan saat menggunakan adapters untuk environment yang berbasis Node (termasuk AWS Lambda), jika diperlukan, polyfills disediakan untuk mengakomodasi dukungan standar web yang lebih banyak pada Node yang terus berkembang saat ini.
 
-In particular, you'll get comfortable with the following:
+Secara khusus, kamu akan menjadi nyaman dengan hal-hal berikut:
 
 ## Fetch APIs
 
-SvelteKit uses [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) for getting data from the network. It's available in [hooks](hooks) and [server routes](routing#server) as well as in the browser.
+SvelteKit menggunakan [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) untuk mendapatkan data dari jaringan. Hal ini
+tersedia di [hooks](hooks) dan [server routes](routing#server) serta di browser.
 
-> A special version of `fetch` is available in [`load`](load) functions, [server hooks](hooks#server-hooks) and [API routes](routing#server) for invoking endpoints directly during server-side rendering, without making an HTTP call, while preserving credentials. (To make credentialled fetches in server-side code outside `load`, you must explicitly pass `cookie` and/or `authorization` headers.) It also allows you to make relative requests, whereas server-side `fetch` normally requires a fully qualified URL.
+> Sebuah versi khusus dari `fetch` tersedia pada fungsi [`load`](load), [server hooks](hooks#server-hooks), dan [API routes](routing#server) untuk memanggil endpoint secara langsung selama server-side rendering tanpa melakukan panggilan HTTP, sambil mempertahankan kredensial. Untuk melakukan fetch dengan kredensial dalam kode server-side di luar `load`, kamu harus secara eksplisit melewatkan header `cookie` dan/atau `authorization`. Hal ini juga memungkinkan kamu untuk membuat permintaan relatif, sedangkan server-side `fetch` biasanya membutuhkan URL yang sepenuhnya terkualifikasi.
 
-Besides `fetch` itself, the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) includes the following interfaces:
+Selain `fetch` itu sendiri, [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) mencakup antarmuka berikut:
 
 ### Request
 
-An instance of [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) is accessible in [hooks](hooks) and [server routes](routing#server) as `event.request`. It contains useful methods like `request.json()` and `request.formData()` for getting data that was posted to an endpoint.
+Sebuah instance dari [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) dapat diakses di [hooks](hooks) dan [server routes](routing#server) sebagai `event.request`. Request berisi metode yang berguna seperti `request.json()` dan `request.formData()` untuk mendapatkan data yang dikirim ke endpoint.
 
 ### Response
 
-An instance of [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) is returned from `await fetch(...)` and handlers in `+server.js` files. Fundamentally, a SvelteKit app is a machine for turning a `Request` into a `Response`.
+Sebuah instance dari [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) dikembalikan dari `await fetch(...)` dan handler di file `+server.js`. Pada dasarnya, aplikasi SvelteKit adalah sebuah mesin untuk mengubah `Request` menjadi `Response`.
 
 ### Headers
 
 The [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) interface allows you to read incoming `request.headers` and set outgoing `response.headers`:
+Sebuah instance dari [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) memungkinkan kamu untuk membaca `request.headers` yang masuk dan mengatur `response.headers` yang keluar:
 
 ```js
 // @errors: 2461
@@ -35,11 +37,11 @@ import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
 export function GET(event) {
-	// log all headers
+	// log semua header
 	console.log(...event.request.headers);
 
 	return json({
-		// retrieve a specific header
+		// dapatkan nilai header tertentu
 		userAgent: event.request.headers.get('user-agent')
 	});
 }
@@ -47,7 +49,7 @@ export function GET(event) {
 
 ## FormData
 
-When dealing with HTML native form submissions you'll be working with [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) objects.
+Ketika berurusan dengan pengiriman form asli HTML, kamu akan bekerja dengan objek [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
 
 ```js
 // @errors: 2461
@@ -58,11 +60,11 @@ import { json } from '@sveltejs/kit';
 export async function POST(event) {
 	const body = await event.request.formData();
 
-	// log all fields
+	// log semua field
 	console.log([...body]);
 
 	return json({
-		// get a specific field's value
+		// dapatkan nilai field tertentu
 		name: body.get('name') ?? 'world'
 	});
 }
@@ -70,15 +72,15 @@ export async function POST(event) {
 
 ## Stream APIs
 
-Most of the time, your endpoints will return complete data, as in the `userAgent` example above. Sometimes, you may need to return a response that's too large to fit in memory in one go, or is delivered in chunks, and for this the platform provides [streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) — [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream), [WritableStream](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) and [TransformStream](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream).
+Sebagian besar waktu, endpoint kamu akan mengembalikan data yang lengkap, seperti pada contoh `userAgent` di atas. Dan terkadang, kamu mungkin perlu mengembalikan respons yang terlalu besar untuk dimuat dalam satu memori sekaligus atau dikirimkan dalam potongan. Maka untuk ini platform menyediakan [streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) — [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream), [WritableStream](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) dan [TransformStream](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream).
 
 ## URL APIs
 
-URLs are represented by the [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) interface, which includes useful properties like `origin` and `pathname` (and, in the browser, `hash`). This interface shows up in various places — `event.url` in [hooks](hooks) and [server routes](routing#server), [`$page.url`](modules#$app-stores) in [pages](routing#page), `from` and `to` in [`beforeNavigate` and `afterNavigate`](modules#$app-navigation) and so on.
+URL direpresentasikan oleh interface [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) yang mencakup properti berguna seperti `origin` dan `pathname` (dan di browser `hash`). Interface ini muncul di berbagai tempat, seperti `event.url` di [hooks](hooks) dan [server routes](routing#server), [`$page.url`](modules#$app-stores) di [pages](routing#page), `from` dan `to` di [`beforeNavigate` dan `afterNavigate`](modules#$app-navigation) dan seterusnya.
 
 ### URLSearchParams
 
-Wherever you encounter a URL, you can access query parameters via `url.searchParams`, which is an instance of [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams):
+Dimanapun kamu menemukan URL, kamu dapat mengakses parameter query melalui `url.searchParams` yang merupakan instance dari [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams):
 
 ```js
 // @filename: ambient.d.ts
@@ -95,7 +97,7 @@ const foo = url.searchParams.get('foo');
 
 ## Web Crypto
 
-The [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) is made available via the `crypto` global. It's used internally for [Content Security Policy](configuration#csp) headers, but you can also use it for things like generating UUIDs:
+[Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) tersedia melalui global `crypto`. Web Crypto API digunakan secara internal untuk header [Content Security Policy](configuration#csp). Tetapi kamu juga dapat menggunakannya untuk hal-hal seperti menghasilkan UUID:
 
 ```js
 const uuid = crypto.randomUUID();

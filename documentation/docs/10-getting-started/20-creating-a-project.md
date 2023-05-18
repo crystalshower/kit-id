@@ -1,8 +1,8 @@
 ---
-title: Creating a project
+title: Membuat proyek
 ---
 
-The easiest way to start building a SvelteKit app is to run `npm create`:
+Langkah yang paling mudah untuk membuat aplikasi SvelteKit adalah dengan menjalankan `npm create`:
 
 ```bash
 npm create svelte@latest my-app
@@ -11,15 +11,15 @@ npm install
 npm run dev
 ```
 
-The first command will scaffold a new project in the `my-app` directory asking you if you'd like to set up some basic tooling such as TypeScript. See the FAQ for [pointers on setting up additional tooling](/faq#integrations). The subsequent commands will then install its dependencies and start a server on [localhost:5173](http://localhost:5173).
+Perintah pertama akan membuat proyek baru di direktori `my-app` dan menanyakan apakah kamu ingin mengatur beberapa tooling dasar seperti TypeScript (Lihat FAQ untuk [petunjuk tentang mengatur tooling tambahan](/faq#integrations)). Perintah selanjutnya akan menginstal dependensi dan memulai server pada alamat [localhost:5173](http://localhost:5173).
 
-There are two basic concepts:
+Ada dua konsep dasar:
 
-- Each page of your app is a [Svelte](https://svelte.dev) component
-- You create pages by adding files to the `src/routes` directory of your project. These will be server-rendered so that a user's first visit to your app is as fast as possible, then a client-side app takes over
+- Setiap halaman aplikasi kamu adalah sebuah komponen [Svelte](https://svelte.dev)
+- Kamu membuat halaman dengan menambahkan file ke direktori `src/routes` dari proyek kamu. Halaman-halaman tersebut akan di-render di server sehingga ketika pengunjung pertama kali datang ke aplikasi kamu, akan dimuat secepat mungkin. Kemudian aplikasi di sisi klien akan mengambil alih
 
-Try editing the files to get a feel for how everything works.
+Cobalah untuk mengedit file tersebut untuk merasakan bagaimana semuanya bekerja.
 
-## Editor setup
+## Pengaturan editor
 
-We recommend using [Visual Studio Code (aka VS Code)](https://code.visualstudio.com/download) with [the Svelte extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode), but [support also exists for numerous other editors](https://sveltesociety.dev/tools#editor-support).
+Kami sarankan untuk menggunakan [Visual Studio Code (alias VS Code)](https://code.visualstudio.com/download) dengan [ekstensi Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). [dukungan juga tersedia untuk banyak editor lainnya](https://sveltesociety.dev/tools#editor-support).

@@ -1,3 +1,48 @@
+# Terjemahan Dokumentasi SvelteKit
+Proyek ini bertujuan untuk menyediakan terjemahan lengkap dari dokumentasi resmi SvelteKit ke dalam Bahasa Indonesia, sehingga lebih mudah diakses dan dipahami oleh para developer berbahasa Indonesia. 
+
+## Status
+| Dokumen | Terjemahan | Review | 
+| --- | :---: | :---: |
+| [Halaman Utama](https://kit.svelte.dev/) | ✅ | ❌ |
+| [Introduction](https://kit.svelte.dev/docs/introduction) | ✅ | ❌ |
+| [Creating a project](https://kit.svelte.dev/docs/creating-a-project) | ✅ | ❌ |
+| [Project structure](https://kit.svelte.dev/docs/project-structure) | ✅ | ❌ |
+| [Web standards](https://kit.svelte.dev/docs/web-standards) | ✅ | ❌ |
+| [Routing](https://kit.svelte.dev/docs/routing) | 📝 | ❌ |
+| [Loading Data](https://kit.svelte.dev/docs/load) | 📝 | ❌ |
+| [Form Actions](https://kit.svelte.dev/docs/form-actions) | ❌ | ❌ |
+| [Page Options](https://kit.svelte.dev/docs/page-options) | ❌ | ❌ |
+| [State Management](https://kit.svelte.dev/docs/state-management) | ❌ | ❌ |
+| [Building Your App](https://kit.svelte.dev/docs/building-your-app) | ❌ | ❌ |
+| [Adapters](https://kit.svelte.dev/docs/adapters) | ❌ | ❌ |
+| [Zero-config deployments](https://kit.svelte.dev/docs/adapter-auto) | ❌ | ❌ |
+| [Node Server](https://kit.svelte.dev/docs/adapter-node) | ❌ | ❌ |
+| [Static Site Generation](https://kit.svelte.dev/docs/adapter-static) | ❌ | ❌ |
+| [Single-page apps](https://kit.svelte.dev/docs/single-page-apps) | ❌ | ❌ |
+| [Cloudflare Pages](https://kit.svelte.dev/docs/adapter-cloudflare) | ❌ | ❌ |
+| [Cloudflare Workers](https://kit.svelte.dev/docs/adapter-cloudflare-workers) | ❌ | ❌ |
+| [Netlify](https://kit.svelte.dev/docs/adapter-netlify) | ❌ | ❌ |
+| [Vercel](https://kit.svelte.dev/docs/adapter-vercel) | ❌ | ❌ |
+| [Writing Adapter](https://kit.svelte.dev/docs/writing-adapters) | ❌ | ❌ |
+| Many more... |  |  |
+
+✅: Selesai diterjemahkan/review
+
+❌: Belum diterjemahkan/review
+
+📝: Sedang diterjemahkan/review
+
+## Kontribusi
+Saya sangat terbuka untuk kontribusi dari siapapun. Jika Anda ingin berkontribusi, silahkan fork repository ini dan lakukan perubahan yang Anda inginkan. Setelah itu, silahkan buat pull request ke repository ini. Saya akan melakukan review dan merge jika perlu.
+## Peraturan Kontribusi
+- Gunakan Bahasa Indonesia yang baik dan benar.
+- Minimalisasi penggunaan terjemahan kecerdasan buatan (misal: Google Translate, ChatGPT, Bing Translator, dll).
+- Gaya penulisan tidak harus sama dengan dokumentasi asli, namun harus tetap mudah dipahami.
+- Nada bahasa tidak harus formal, namun harus tetap sopan.
+- Jangan lupa untuk menterjemahkan komentar pada _code block_ jika ada.
+
+---
 [![Chat](https://img.shields.io/discord/457912077277855764?label=chat&logo=discord)](https://svelte.dev/chat)
 
 # SvelteKit

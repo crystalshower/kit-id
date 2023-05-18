@@ -14,12 +14,12 @@
 
 <Section --background="var(--background-1)">
 	<div class="grid" style="--columns: 3">
-		<h2>deploy anywhere</h2>
+		<h2>deploy dimanapun</h2>
 		<div class="blurb">
 			<p>
-				Export static HTML files. Run your own Node server. Deploy code to the edge of the world. If
-				a platform runs JavaScript, it runs SvelteKit — in some cases with <strong
-					>zero configuration</strong
+				Ekspor file HTML statis. Jalankan server Node milikmu sendiri. Terapkan kode hingga ke ujung dunia. 
+				Jika platform tersebut dapat menjalankan JavaScript, maka SvelteKit dapat digunakan <strong
+					>tanpa konfigurasi</strong
 				>.
 			</p>
 			<p>Want to try deploying somewhere else? Swap out your adapter with a single line of code.</p>
@@ -35,7 +35,7 @@
 				class="invert"
 			>
 				<img src={html5} alt="" />
-				<span><span class="large">Static</span> HTML</span>
+				<span>HTML <span class="large">Statis</span></span>
 			</a>
 			<a
 				target="_blank"
@@ -116,7 +116,7 @@
 				height="100%"
 				alt="Dynamically rendered map of the world, centered on the user's location"
 			/>
-			<span> rendered on the edge, just for you </span>
+			<span> dirender di tepi, khusus untukmu </span>
 		</div>
 	</div>
 </Section>

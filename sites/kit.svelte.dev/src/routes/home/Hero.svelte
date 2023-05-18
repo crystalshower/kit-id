@@ -12,8 +12,8 @@
 				<Logotype />
 			</div>
 
-			<div class="tagline">web development, streamlined</div>
-			<a class="cta" href="{base}/docs/introduction">read the docs</a>
+			<div class="tagline">Pengembangan web, disederhanakan</div>
+			<a class="cta" href="{base}/docs/introduction">baca dokumentasi</a>
 		</div>
 
 		<div class="hero-image">

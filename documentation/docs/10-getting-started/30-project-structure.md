@@ -1,91 +1,95 @@
 ---
-title: Project structure
+title: Struktur proyek
 ---
 
-A typical SvelteKit project looks like this:
+Ketika kamu membuat proyek SvelteKit, kamu akan mendapatkan struktur direktori seperti ini:
 
 ```bash
 my-project/
 ├ src/
 │ ├ lib/
 │ │ ├ server/
-│ │ │ └ [your server-only lib files]
-│ │ └ [your lib files]
+│ │ │ └ [file-file lib server kamu]
+│ │ └ [file-file lib kamu]
 │ ├ params/
-│ │ └ [your param matchers]
+│ │ └ [file-file param kamu]
 │ ├ routes/
-│ │ └ [your routes]
+│ │ └ [file-file route kamu]
 │ ├ app.html
 │ ├ error.html
 │ ├ hooks.client.js
 │ └ hooks.server.js
 ├ static/
-│ └ [your static assets]
+│ └ [file-file static kamu]
 ├ tests/
-│ └ [your tests]
+│ └ [file-file test kamu]
 ├ package.json
 ├ svelte.config.js
 ├ tsconfig.json
 └ vite.config.js
 ```
 
-You'll also find common files like `.gitignore` and `.npmrc` (and `.prettierrc` and `.eslintrc.cjs` and so on, if you chose those options when running `npm create svelte@latest`).
+Kamu juga akan menemukan file-file umum seperti `.gitignore` dan `.npmrc` (`.prettierrc`, `.eslintrc.cjs` dan lain-lain, jika kamu memilih opsi tersebut ketika menjalankan `npm create svelte@latest`).
 
-## Project files
+## File proyek
 
 ### src
 
-The `src` directory contains the meat of your project. Everything except `src/routes` and `src/app.html` is optional.
+Direktori `src` berisi inti dari proyek kamu. Semuanya kecuali `src/routes` dan `src/app.html` adalah opsional.
 
-- `lib` contains your library code (utilities and components), which can be imported via the [`$lib`](modules#$lib) alias, or packaged up for distribution using [`svelte-package`](packaging)
-  - `server` contains your server-only library code. It can be imported by using the [`$lib/server`](server-only-modules) alias. SvelteKit will prevent you from importing these in client code.
-- `params` contains any [param matchers](advanced-routing#matching) your app needs
-- `routes` contains the [routes](routing) of your application. You can also colocate other components that are only used within a single route here
-- `app.html` is your page template — an HTML document containing the following placeholders:
-  - `%sveltekit.head%` — `<link>` and `<script>` elements needed by the app, plus any `<svelte:head>` content
-  - `%sveltekit.body%` — the markup for a rendered page. This should live inside a `<div>` or other element, rather than directly inside `<body>`, to prevent bugs caused by browser extensions injecting elements that are then destroyed by the hydration process. SvelteKit will warn you in development if this is not the case
-  - `%sveltekit.assets%` — either [`paths.assets`](configuration#paths), if specified, or a relative path to [`paths.base`](configuration#paths)
-  - `%sveltekit.nonce%` — a [CSP](configuration#csp) nonce for manually included links and scripts, if used
-  - `%sveltekit.env.[NAME]%` - this will be replaced at render time with the `[NAME]` environment variable, which must begin with the [`publicPrefix`](https://kit.svelte.dev/docs/configuration#env) (usually `PUBLIC_`). It will fallback to `''` if not matched.
-- `error.html` is the page that is rendered when everything else fails. It can contain the following placeholders:
-  - `%sveltekit.status%` — the HTTP status
-  - `%sveltekit.error.message%` — the error message
-- `hooks.client.js` contains your client [hooks](/docs/hooks)
-- `hooks.server.js` contains your server [hooks](/docs/hooks)
-- `service-worker.js` contains your [service worker](/docs/service-workers)
+- `lib` berisi kode pustaka kamu (utilitas dan komponen), yang dapat diimpor melalui alias [`$lib`](modules#$lib), atau dikemas untuk didistribusikan menggunakan [`svelte-package`](packaging)
+  - `server` berisi kode pustaka yang hanya berjalan di server. Kode ini dapat diimpor dengan menggunakan alias [`$lib/server`](server-only-modules). SvelteKit akan mencegah kamu mengimpor kode ini di kode klien.
+- `params` berisi [param matcher](advanced-routing#matching) yang dibutuhkan
+- `routes` berisi [route](routing) aplikasi yang kamu buat. Kamu juga dapat menempatkan komponen lain yang hanya digunakan dalam satu route di sini
+- `app.html` adalah template halaman kamu — sebuah dokumen HTML yang berisi placeholder berikut:
+  - `%sveltekit.head%` — `<link>` dan `<script>` yang dibutuhkan aplikasimu, termasuk kode yang dihasilkan oleh `<svelte:head>`
+  - `%sveltekit.body%` — markup untuk halaman yang di-render. Bagian ini harus berada di dalam `<div>` atau elemen lain, bukan langsung di dalam `<body>`, untuk mencegah bug yang disebabkan oleh ekstensi browser yang menyuntikkan elemen lalu dihancurkan saat proses _hydration_. SvelteKit akan memberi peringatan pada saat pengembangan jika hal ini terjadi
+  - `%sveltekit.assets%` — [`paths.assets`](configuration#paths) jika ditentukan, atau path relatif ke [`paths.base`](configuration#paths)
+  - `%sveltekit.nonce%` — sebuah [CSP](configuration#csp) nonce untuk link dan script yang dimasukkan secara manual jika digunakan
+  - `%sveltekit.env.[NAME]%` — akan diganti saat proses render dengan environment variable `[NAME]`, yang harus dimulai dengan [`publicPrefix`](https://kit.svelte.dev/docs/configuration#env) (biasanya `PUBLIC_`). Jika tidak cocok akan fallback ke `''`
+- `error.html` adalah halaman yang di-render ketika semuanya gagal. Halaman ini dapat berisi placeholder berikut:
+  - `%sveltekit.status%` — kode status HTTP yang dihasilkan
+  - `%sveltekit.error.message%` — pesan kesalahan yang dihasilkan
+- `hooks.client.js` berisi [hooks](/docs/hooks) client kamu
+- `hooks.server.js` berisi [hooks](/docs/hooks) server kamu
+- `service-worker.js` berisi [service worker](/docs/service-workers) kamu
 
-(Whether the project contains `.js` or `.ts` files depends on whether you opt to use TypeScript when you create your project. You can switch between JavaScript and TypeScript in the documentation using the toggle at the bottom of this page.)
+(Kamu dapat memilih untuk menggunakan antara JavaScript dan TypeScript ketika kamu membuat proyek. Kamu dapat beralih antara JavaScript dan TypeScript di dokumentasi menggunakan toggle di bagian bawah halaman ini.)
 
-If you added [Vitest](https://vitest.dev) when you set up your project, your unit tests will live in the `src` directory with a `.test.js` extension.
+Jika kamu menambahkan [Vitest](https://vitest.dev) ketika kamu membuat proyek, unit test kamu akan berada di direktori `src` dengan ekstensi `.test.js`.
 
 ### static
 
-Any static assets that should be served as-is, like `robots.txt` or `favicon.png`, go in here.
+aset statis yang harus disajikan apa adanya, seperti `robots.txt` atau `favicon.png`, masuk ke sini.
 
 ### tests
 
-If you added [Playwright](https://playwright.dev/) for browser testing when you set up your project, the tests will live in this directory.
+Jika saat kamu membuat proyek lalu kamu menambahkan [Playwright](https://playwright.dev/) untuk melakukan pengujian browser, pengujian akan berada di direktori ini.
 
 ### package.json
 
-Your `package.json` file must include `@sveltejs/kit`, `svelte` and `vite` as `devDependencies`.
+`package.json` kamu harus mencakup `@sveltejs/kit`, `svelte` dan `vite` sebagai `devDependencies`.
 
 When you create a project with `npm create svelte@latest`, you'll also notice that `package.json` includes `"type": "module"`. This means that `.js` files are interpreted as native JavaScript modules with `import` and `export` keywords. Legacy CommonJS files need a `.cjs` file extension.
+Saat kamu membuat proyek dengan `npm create svelte@latest`, kamu akan melihat bahwa `package.json` mencakup `"type": "module"`. Ini berarti file `.js` akan diinterpretasikan sebagai native JavaScript modules dengan kata kunci `import` dan `export`. File CommonJS legacy membutuhkan ekstensi file `.cjs`.
 
 ### svelte.config.js
 
-This file contains your Svelte and SvelteKit [configuration](configuration).
+File ini berisi konfigurasi Svelte dan SvelteKit kamu [configuration](configuration).
 
 ### tsconfig.json
 
-This file (or `jsconfig.json`, if you prefer type-checked `.js` files over `.ts` files) configures TypeScript, if you added typechecking during `npm create svelte@latest`. Since SvelteKit relies on certain configuration being set a specific way, it generates its own `.svelte-kit/tsconfig.json` file which your own config `extends`.
+File ini (atau `jsconfig.json`, jika kamu lebih suka file `.js` yang type-checked daripada file `.ts`) adalah file konfigurasi TypeScript yang kamu tambahkan saat menjalankan `npm create svelte@latest`. 
+
+Karena SvelteKit bergantung pada konfigurasi tertentu yang diatur dengan cara tertentu, SvelteKit akan menghasilkan file `.svelte-kit/tsconfig.json` yang konfigurasinya akan di-`extend` oleh konfigurasi kamu sendiri.
 
 ### vite.config.js
 
-A SvelteKit project is really just a [Vite](https://vitejs.dev) project that uses the [`@sveltejs/kit/vite`](modules#sveltejs-kit-vite) plugin, along with any other [Vite configuration](https://vitejs.dev/config/).
+Proyek SvelteKit sebenarnya hanyalah proyek [Vite](https://vitejs.dev) yang menggunakan plugin [`@sveltejs/kit/vite`](modules#sveltejs-kit-vite) bersama dengan konfigurasi [Vite lainnya](https://vitejs.dev/config/).
 
-## Other files
+## File-file lainnya
 
 ### .svelte-kit
 
-As you develop and build your project, SvelteKit will generate files in a `.svelte-kit` directory (configurable as [`outDir`](configuration#outdir)). You can ignore its contents, and delete them at any time (they will be regenerated when you next `dev` or `build`).
+Selama kamu mengembangkan dan membangun proyek kamu, SvelteKit akan menghasilkan file di direktori `.svelte-kit` (dapat dikonfigurasi sebagai [`outDir`](configuration#outdir)). Kamu dapat mengabaikan isinya, dan menghapusnya kapan saja, namun direktori tersebut akan dibuat kembali ketika kamu menjalakan `dev` atau `build`.
+

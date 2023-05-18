@@ -1,25 +1,24 @@
 ---
-title: Introduction
+title: Pengenalan
 ---
 
-## Before we begin
-
-> If you're new to Svelte or SvelteKit we recommend checking out the [interactive tutorial](https://learn.svelte.dev).
+## Sebelum kita mulai
+> Jika kamu baru menggunakan Svelte atau SvelteKit, kami sarankan untuk memeriksa [tutorial interaktif](https://learn.svelte.dev).
 >
-> If you get stuck, reach out for help in the [Discord chatroom](https://svelte.dev/chat).
+> Jika kamu mengalami kesulitan, jangan ragu untuk mencari bantuan [Discord chatroom](https://svelte.dev/chat) (Bahasa Inggris).
 
-## What is SvelteKit?
+## Apa itu SvelteKit?
 
-SvelteKit is a framework for rapidly developing robust, performant web applications using [Svelte](https://svelte.dev/). If you're coming from React, SvelteKit is similar to Next. If you're coming from Vue, SvelteKit is similar to Nuxt.
+SvelteKit adalah sebuah framework untuk mengembangkan aplikasi web yang kuat dengan performa tinggi dan cepat menggunakan [Svelte](https://svelte.dev/). Jika kamu sudah mengenal React, maka SvelteKit mirip dengan Next. Jika kamu sudah mengenal Vue, maka SvelteKit  mirip dengan Nuxt.
 
-## What is Svelte?
+## Apa itu Svelte?
 
-In short, Svelte is a way of writing user interface components — like a navigation bar, comment section, or contact form — that users see and interact with in their browsers. The Svelte compiler converts your components to JavaScript that can be run to render the HTML for the page and to CSS that styles the page. You don't need to know Svelte to understand the rest of this guide, but it will help. If you'd like to learn more, check out [the Svelte tutorial](https://svelte.dev/tutorial).
+Secara singkat, Svelte adalah cara untuk menulis komponen antarmuka pengguna seperti menu navigasi, bagian komentar dan formulir kontak. Dimana pengguna dapat melihat dan melakukan interaksi di browser mereka. Kompiler Svelte mengonversi komponen kamu menjadi kode JavaScript yang dapat dijalankan untuk merender HTML sebagai struktur halaman dan CSS untuk mengatur tampilan halaman. Kamu tidak perlu mengenal Svelte untuk memahami panduan ini, namun pengetahuan tentang Svelte akan membantu. Jika kamu ingin mempelajari lebih lanjut, silakan cek [tutorial Svelte](https://svelte.dev/tutorial).
 
-## What does SvelteKit provide on top of Svelte?
+## Apa kelebihan SvelteKit dibandingkan dengan Svelte?
 
-Svelte renders UI components. You can compose these components and render an entire page with just Svelte, but you need more than just Svelte to write an entire app.
+Svelte merender komponen antarmuka pengguna. Kamu dapat menyusun komponen-komponen tersebut dan merender seluruh halaman hanya dengan Svelte, namun kamu membutuhkan lebih dari sekedar Svelte untuk menulis aplikasi secara keseluruhan.
 
-SvelteKit provides basic functionality like a [router](glossary#routing) — which updates the UI when a link is clicked — and [server-side rendering (SSR)](glossary#ssr). But beyond that, building an app with all the modern best practices is fiendishly complicated. Those practices include [build optimizations](https://vitejs.dev/guide/features.html#build-optimizations), so that you load only the minimal required code; [offline support](service-workers); [preloading](link-options#data-sveltekit-preload-data) pages before the user initiates navigation; [configurable rendering](page-options) that allows you to render different parts of your app on the server with [SSR](glossary#ssr), in the browser [client-side rendering](glossary#csr), or at build-time with [prerendering](glossary#prerendering); and many other things. SvelteKit does all the boring stuff for you so that you can get on with the creative part.
+SvelteKit menyediakan fungsi dasar seperti [router](glossary#routing) - yang memperbarui UI ketika tautan diklik - dan [server-side rendering (SSR)](glossary#ssr). Namun selain itu, membangun aplikasi dengan semua langkah terbaik yang modern sangatlah rumit. Langkah-langkah tersebut meliputi [build optimizations](https://vitejs.dev/guide/features.html#build-optimizations), sehingga kamu hanya memuat kode yang diperlukan secara minimal; [dukungan offline](service-workers); [preloading](link-options#data-sveltekit-preload-data) halaman sebelum pengguna memulai navigasi; [pengaturan render](page-options) yang dapat kamu konfigurasi untuk merender bagian-bagian yang berbeda dari aplikasi kamu di server dengan [SSR](glossary#ssr), di browser [client-side rendering](glossary#csr), atau pada waktu pembangunan dengan [prerendering](glossary#prerendering); dan banyak hal lainnya. SvelteKit melakukan semua hal membosankan tersebut untukmu sehingga kamu dapat fokus pada bagian kreatif saja.
 
-It reflects changes to your code in the browser instantly to provide a lightning-fast and feature-rich development experience by leveraging [Vite](https://vitejs.dev/) with a [Svelte plugin](https://github.com/sveltejs/vite-plugin-svelte) to do [Hot Module Replacement (HMR)](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/config.md#hot).
+SvelteKit mencerminkan perubahan pada kode kamu secara instan di browser untuk memberikan pengalaman pengembangan yang cepat dan kaya fitur dengan memanfaatkan [Vite](https://vitejs.dev/) dengan [plugin Svelte](https://github.com/sveltejs/vite-plugin-svelte) untuk melakukan [Hot Module Replacement (HMR)](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/config.md#hot).
