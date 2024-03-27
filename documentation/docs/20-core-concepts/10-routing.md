@@ -2,33 +2,33 @@
 title: Routing
 ---
 
-At the heart of SvelteKit is a _filesystem-based router_. The routes of your app — i.e. the URL paths that users can access — are defined by the directories in your codebase:
+Di dalam SvelteKit, terdapat _filesystem-based router_. Rute dari aplikasi kamu — yaitu jalur URL yang dapat diakses pengguna yang didefinisikan oleh direktori dalam kode sumber kamu:
 
-- `src/routes` is the root route
-- `src/routes/about` creates an `/about` route
-- `src/routes/blog/[slug]` creates a route with a _parameter_, `slug`, that can be used to load data dynamically when a user requests a page like `/blog/hello-world`
+- `src/routes` adalah rute akar (root)
+- `src/routes/about` membuat rute `/about`
+- `src/routes/blog/[slug]` membuat rute dengan _parameter_, `slug`, yang dapat digunakan untuk memuat data secara dinamis ketika pengguna meminta halaman seperti `/blog/hello-world`
 
-> You can change `src/routes` to a different directory by editing the [project config](configuration).
+> Kamu dapat mengubah `src/routes` ke direktori yang berbeda dengan mengedit [konfigurasi proyek](configuration).
 
-Each route directory contains one or more _route files_, which can be identified by their `+` prefix.
+Setiap direktori rute berisi satu atau lebih _file rute_, yang dapat diidentifikasi dengan awalan `+`.
 
 ## +page
 
 ### +page.svelte
 
-A `+page.svelte` component defines a page of your app. By default, pages are rendered both on the server ([SSR](glossary#ssr)) for the initial request and in the browser ([CSR](glossary#csr)) for subsequent navigation.
+Komponen `+page.svelte` mendefinisikan halaman aplikasi kamu. Secara default, halaman dirender di _server_ ([SSR](glossary#ssr)) untuk permintaan awal dan di _browser_ ([CSR](glossary#csr)) untuk navigasi selanjutnya.
 
 ```svelte
 <!--- file: src/routes/+page.svelte --->
-<h1>Hello and welcome to my site!</h1>
-<a href="/about">About my site</a>
+<h1>Selamat datang di situs saya</h1>
+<a href="/tentang">Tentang situs saya</a>
 ```
 
 ```svelte
-<!--- file: src/routes/about/+page.svelte --->
-<h1>About this site</h1>
+<!--- file: src/routes/tentang/+page.svelte --->
+<h1>Tentang situs saya</h1>
 <p>TODO...</p>
-<a href="/">Home</a>
+<a href="/">Beranda</a>
 ```
 
 ```svelte
@@ -42,11 +42,11 @@ A `+page.svelte` component defines a page of your app. By default, pages are ren
 <div>{@html data.content}</div>
 ```
 
-> Note that SvelteKit uses `<a>` elements to navigate between routes, rather than a framework-specific `<Link>` component.
+> Perhatikan bahwa SvelteKit menggunakan elemen `<a>` untuk menavigasi antar rute, bukan komponen `<Link>` yang sering digunakan pada _framework_ lainnya.
 
 ### +page.js
 
-Often, a page will need to load some data before it can be rendered. For this, we add a `+page.js` module that exports a `load` function:
+Seringkali, sebuah halaman akan perlu memuat beberapa data sebelum dapat dirender (dalam hal ini, kita menambahkan modul `+page.js` yang mengekspor fungsi `load`):
 
 ```js
 /// file: src/routes/blog/[slug]/+page.js
@@ -57,27 +57,26 @@ export function load({ params }) {
 	if (params.slug === 'hello-world') {
 		return {
 			title: 'Hello world!',
-			content: 'Welcome to our blog. Lorem ipsum dolor sit amet...'
+			content: 'Selamat datang di blog kami. Lorem ipsum dolor sit amet...'
 		};
 	}
 
-	error(404, 'Not found');
+	error(404, 'Tidak ditemukan');
 }
 ```
+Fungsi ini berjalan bersamaan dengan `+page.svelte`, yang berarti berjalan di _server_ selama _server-side rendering_ dan di _browser_ selama navigasi _client-side_. Lihat [`load`](load) untuk detail lengkap dari API ini.
 
-This function runs alongside `+page.svelte`, which means it runs on the server during server-side rendering and in the browser during client-side navigation. See [`load`](load) for full details of the API.
+Selain `load`, `+page.js` dapat mengekspor nilai yang mengonfigurasi perilaku halaman:
 
-As well as `load`, `+page.js` can export values that configure the page's behaviour:
+- `export const prerender = true` atau `false` atau `'auto'`
+- `export const ssr = true` atau `false`
+- `export const csr = true` atau `false`
 
-- `export const prerender = true` or `false` or `'auto'`
-- `export const ssr = true` or `false`
-- `export const csr = true` or `false`
-
-You can find more information about these in [page options](page-options).
+Kamu dapat menemukan informasi lebih lanjut tentang ini di [halaman opsi](page-options).
 
 ### +page.server.js
 
-If your `load` function can only run on the server — for example, if it needs to fetch data from a database or you need to access private [environment variables](modules#$env-static-private) like API keys — then you can rename `+page.js` to `+page.server.js` and change the `PageLoad` type to `PageServerLoad`.
+Jika fungsi `load` kamu hanya dapat berjalan di _server_ — misalnya, jika perlu mengambil data dari database atau kamu perlu mengakses [variabel lingkungan](modules#$env-static-private) seperti kunci API — maka kamu dapat mengubah nama `+page.js` menjadi `+page.server.js` dan mengubah tipe `PageLoad` menjadi `PageServerLoad`.
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -108,15 +107,15 @@ export async function load({ params }) {
 }
 ```
 
-During client-side navigation, SvelteKit will load this data from the server, which means that the returned value must be serializable using [devalue](https://github.com/rich-harris/devalue). See [`load`](load) for full details of the API.
+Selama navigasi _client-side_, SvelteKit akan memuat data ini dari _server_, yang berarti nilai yang dikembalikan harus dapat diserialisasi menggunakan [devalue](https://github.com/rich-harris/devalue). Lihat [`load`](load) untuk detail lengkap dari API ini.
 
-Like `+page.js`, `+page.server.js` can export [page options](page-options) — `prerender`, `ssr` and `csr`.
+Seperti `+page.js`, `+page.server.js` dapat mengekspor [opsi halaman](page-options) — `prerender`, `ssr` dan `csr`.
 
-A `+page.server.js` file can also export _actions_. If `load` lets you read data from the server, `actions` let you write data _to_ the server using the `<form>` element. To learn how to use them, see the [form actions](form-actions) section.
+`+page.server.js` juga dapat mengekspor _actions_. Jika `load` memungkinkan kamu bisa membaca data dari _server_, _actions_ memungkinkan kamu menulis data _ke_ server menggunakan elemen `<form>`. Untuk mempelajari cara menggunakannya, lihat bagian [form actions](form-actions).
 
 ## +error
 
-If an error occurs during `load`, SvelteKit will render a default error page. You can customise this error page on a per-route basis by adding an `+error.svelte` file:
+Jika terjadi kesalahan selama `load`, SvelteKit akan merender halaman kesalahan default. Kamu dapat menyesuaikan halaman kesalahan ini berdasarkan rute dengan menambahkan file `+error.svelte`:
 
 ```svelte
 <!--- file: src/routes/blog/[slug]/+error.svelte --->
@@ -127,64 +126,65 @@ If an error occurs during `load`, SvelteKit will render a default error page. Yo
 <h1>{$page.status}: {$page.error.message}</h1>
 ```
 
-SvelteKit will 'walk up the tree' looking for the closest error boundary — if the file above didn't exist it would try `src/routes/blog/+error.svelte` and then `src/routes/+error.svelte` before rendering the default error page. If _that_ fails (or if the error was thrown from the `load` function of the root `+layout`, which sits 'above' the root `+error`), SvelteKit will bail out and render a static fallback error page, which you can customise by creating a `src/error.html` file.
+SvelteKit akan mencari _error boundary_ terdekat — jika file di atasnya tidak ada, ia akan mencoba `src/routes/blog/+error.svelte` dan kemudian `src/routes/+error.svelte` sebelum merender halaman kesalahan default. Jika _itu_ gagal (atau jika kesalahan dilempar dari fungsi `load` dari `+layout` akar, yang berada 'di atas' `+error` akar), SvelteKit akan keluar dan merender halaman kesalahan statis cadangan, yang dapat kamu sesuaikan dengan membuat file `src/error.html`.
 
-If the error occurs inside a `load` function in `+layout(.server).js`, the closest error boundary in the tree is an `+error.svelte` file _above_ that layout (not next to it).
+Jika kesalahan terjadi di dalam fungsi `load` di `+layout(.server).js`, _error boundary_ terdekat dalam pohon adalah file `+error.svelte` _di atas_ layout itu (bukan di sebelahnya).
 
-If no route can be found (404), `src/routes/+error.svelte` (or the default error page, if that file does not exist) will be used.
+Jika tidak ada rute yang ditemukan (404), `src/routes/+error.svelte` (atau halaman kesalahan default, jika file tersebut tidak ada) akan digunakan.
 
-> `+error.svelte` is _not_ used when an error occurs inside [`handle`](hooks#server-hooks-handle) or a [+server.js](#server) request handler.
+> `+error.svelte` _tidak_ digunakan ketika kesalahan terjadi di dalam [`handle`](hooks#server-hooks-handle) atau penanganan permintaan [+server.js](#server).
 
-You can read more about error handling [here](errors).
+Kamu dapat membaca lebih lanjut tentang penanganan kesalahan [di sini](errors).
 
 ## +layout
 
-So far, we've treated pages as entirely standalone components — upon navigation, the existing `+page.svelte` component will be destroyed, and a new one will take its place.
+Selama ini, kita telah memperlakukan halaman sebagai komponen yang sepenuhnya mandiri — saat berpindah halaman, komponen `+page.svelte` yang ada akan dihancurkan, dan digantikan dengan yang baru.
 
-But in many apps, there are elements that should be visible on _every_ page, such as top-level navigation or a footer. Instead of repeating them in every `+page.svelte`, we can put them in _layouts_.
+Tetapi dalam banyak aplikasi, ada elemen yang harus terlihat di _setiap_ halaman, seperti navigasi tingkat atas atau footer. Daripada mengulangnya di setiap `+page.svelte`, kita dapat meletakkannya di _layouts_.
 
 ### +layout.svelte
 
-To create a layout that applies to every page, make a file called `src/routes/+layout.svelte`. The default layout (the one that SvelteKit uses if you don't bring your own) looks like this...
+Untuk membuat layout yang berlaku untuk setiap halaman, buat file bernama `src/routes/+layout.svelte`. Layout default (yang digunakan SvelteKit jika kamu tidak membawa milikmu) terlihat seperti ini...
 
 ```html
 <slot></slot>
 ```
 
-...but we can add whatever markup, styles and behaviour we want. The only requirement is that the component includes a `<slot>` for the page content. For example, let's add a nav bar:
+...tetapi kita dapat menambahkan apa pun yang kita inginkan. Salah satu syaratnya adalah komponen tersebut harus mencakup `<slot>`. Sebagai contoh, mari tambahkan bilah navigasi:
 
 ```html
 /// file: src/routes/+layout.svelte
 <nav>
-	<a href="/">Home</a>
-	<a href="/about">About</a>
-	<a href="/settings">Settings</a>
+	<a href="/">Beranda</a>
+	<a href="/tentang">Tentang</a>
+	<a href="/pengaturan">Pengaturan</a>
 </nav>
 
 <slot></slot>
 ```
 
-If we create pages for `/`, `/about` and `/settings`...
+Ketika kita membuat halaman untuk `/`, `/tentang` dan `/pengaturan`...
 
 ```html
 /// file: src/routes/+page.svelte
-<h1>Home</h1>
+<h1>Beranda</h1>
 ```
 
 ```html
-/// file: src/routes/about/+page.svelte
-<h1>About</h1>
+/// file: src/routes/tentang/+page.svelte
+<h1>Tentang</h1>
 ```
 
 ```html
-/// file: src/routes/settings/+page.svelte
-<h1>Settings</h1>
+/// file: src/routes/pengaturan/+page.svelte
+<h1>Pengaturan</h1>
 ```
 
-...the nav will always be visible, and clicking between the three pages will only result in the `<h1>` being replaced.
+...bilah navigasi akan selalu terlihat, dan mengklik antara tiga halaman hanya akan mengganti `<h1>`.
 
-Layouts can be _nested_. Suppose we don't just have a single `/settings` page, but instead have nested pages like `/settings/profile` and `/settings/notifications` with a shared submenu (for a real-life example, see [github.com/settings](https://github.com/settings)).
+Layout juga dapat _ditumpuk_. Misalkan kita tidak hanya memiliki satu halaman `/pengaturan`, tetapi sebaliknya memiliki halaman tumpuk seperti `/pengaturan/profil` dan `/pengaturan/notifikasi` dengan submenu bersama (untuk contoh nyata, lihat [github.com/settings](https://github.com/settings)).
 
+Kita dapat membuat Layout yang hanya berlaku untuk halaman di bawah `/pengaturan` (sambil mewarisi tata letak akar dengan navigasi tingkat atas):
 We can create a layout that only applies to pages below `/settings` (while inheriting the root layout with the top-level nav):
 
 ```svelte
@@ -194,20 +194,20 @@ We can create a layout that only applies to pages below `/settings` (while inher
 	export let data;
 </script>
 
-<h1>Settings</h1>
+<h1>Pengaturan</h1>
 
 <div class="submenu">
 	{#each data.sections as section}
-		<a href="/settings/{section.slug}">{section.title}</a>
+		<a href="/pengaturan/{section.slug}">{section.title}</a>
 	{/each}
 </div>
 
 <slot></slot>
 ```
 
-You can see how `data` is populated by looking at the `+layout.js` example in the next section just below.
+Kamu dapat melihat bagaimana `data` diisi dengan melihat contoh `+layout.js` di bagian berikutnya di bawah ini.
 
-By default, each layout inherits the layout above it. Sometimes that isn't what you want - in this case, [advanced layouts](advanced-routing#advanced-layouts) can help you.
+Secara default, setiap _layout_ mewarisi _layout_ di atasnya. Terkadang hal itu bukan yang kamu inginkan - dalam hal ini, [tata letak lanjutan](advanced-routing#advanced-layouts) dapat membantu kamu.
 
 ### +layout.js
 

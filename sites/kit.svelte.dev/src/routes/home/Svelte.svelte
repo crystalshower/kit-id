@@ -26,8 +26,8 @@
 
 		<div>
 			<p>
-				SvelteKit dibangun di atas Svelte, sebuah framework UI yang menggunakan compiler yang
-				memungkinkan kamu menulis komponen yang sangat singkat dan bekerja minimal di browser
+				SvelteKit dibangun di atas Svelte, sebuah framework antarmuka menggunakan compiler yang
+				bisa kamu gunakan untuk menulis komponen yang sangat singkat dan bekerja dengan minimal di browser
 				menggunakan bahasa yang sudah kamu kenal seperti HTML, CSS, dan JavaScript. <strong
 					>Seperti surat cinta untuk pengembangan web.</strong
 				>

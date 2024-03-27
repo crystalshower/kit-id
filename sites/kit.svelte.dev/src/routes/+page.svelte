@@ -92,9 +92,9 @@
 		}}
 	>
 		<span slot="license">
-			SvelteKit is <a target="_blank" rel="noreferrer" href="https://github.com/sveltejs/kit"
-				>free and open source software</a
-			> released under the MIT license.
+			SvelteKit adalah <a target="_blank" rel="noreferrer" href="https://github.com/sveltejs/kit"
+				>perangkat lunak gratis dan open source</a
+			> dengan lisensi MIT.
 		</span></Footer
 	>
 </div>

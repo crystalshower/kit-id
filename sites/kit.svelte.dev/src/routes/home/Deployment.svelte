@@ -25,7 +25,7 @@
 					>tanpa konfigurasi</strong
 				>.
 			</p>
-			<p>Want to try deploying somewhere else? Swap out your adapter with a single line of code.</p>
+			<p>Ingin mencoba deploy di tempat lain? Ganti adaptermu hanya dengan satu baris kode.</p>
 		</div>
 	</div>
 
@@ -108,7 +108,7 @@
 			</a>
 			<a target="_blank" rel="noreferrer" href="https://kit.svelte.dev/docs/adapters">
 				<img src={plus} alt="" />
-				<span>More...</span>
+				<span>Lainnya...</span>
 			</a>
 		</div>
 
@@ -119,7 +119,7 @@
 				height="100%"
 				alt="Dynamically rendered map of the world, centered on the user's location"
 			/>
-			<span> dirender di tepi, khusus untukmu </span>
+			<span> dirender di ujung, spesial untukmu </span>
 		</div>
 	</div>
 </Section>
