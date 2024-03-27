@@ -1,5 +1,7 @@
+import { createReadStream } from 'node:fs';
+import { Readable } from 'node:stream';
 import * as set_cookie_parser from 'set-cookie-parser';
-import { error } from '../index.js';
+import { SvelteKitError } from '../../runtime/control.js';
 
 /**
  * @param {import('http').IncomingMessage} req
@@ -22,19 +24,6 @@ function get_raw_body(req, body_size_limit) {
 		return null;
 	}
 
-	let length = content_length;
-
-	if (body_size_limit) {
-		if (!length) {
-			length = body_size_limit;
-		} else if (length > body_size_limit) {
-			throw error(
-				413,
-				`Received content-length of ${length}, but only accept up to ${body_size_limit} bytes.`
-			);
-		}
-	}
-
 	if (req.destroyed) {
 		const readable = new ReadableStream();
 		readable.cancel();
@@ -46,6 +35,21 @@ function get_raw_body(req, body_size_limit) {
 
 	return new ReadableStream({
 		start(controller) {
+			if (body_size_limit !== undefined && content_length > body_size_limit) {
+				let message = `Content-length of ${content_length} exceeds limit of ${body_size_limit} bytes.`;
+
+				if (body_size_limit === 0) {
+					// https://github.com/sveltejs/kit/pull/11589
+					// TODO this exists to aid migration — remove in a future version
+					message += ' To disable body size limits, specify Infinity rather than 0.';
+				}
+
+				const error = new SvelteKitError(413, 'Payload Too Large', message);
+
+				controller.error(error);
+				return;
+			}
+
 			req.on('error', (error) => {
 				cancelled = true;
 				controller.error(error);
@@ -60,16 +64,15 @@ function get_raw_body(req, body_size_limit) {
 				if (cancelled) return;
 
 				size += chunk.length;
-				if (size > length) {
+				if (size > content_length) {
 					cancelled = true;
-					controller.error(
-						error(
-							413,
-							`request body size exceeded ${
-								content_length ? "'content-length'" : 'BODY_SIZE_LIMIT'
-							} of ${length}`
-						)
-					);
+
+					const constraint = content_length ? 'content-length' : 'BODY_SIZE_LIMIT';
+					const message = `request body size exceeded ${constraint} of ${content_length}`;
+
+					const error = new SvelteKitError(413, 'Payload Too Large', message);
+					controller.error(error);
+
 					return;
 				}
 
@@ -92,18 +95,32 @@ function get_raw_body(req, body_size_limit) {
 	});
 }
 
-/** @type {import('@sveltejs/kit/node').getRequest} */
+/**
+ * @param {{
+ *   request: import('http').IncomingMessage;
+ *   base: string;
+ *   bodySizeLimit?: number;
+ * }} options
+ * @returns {Promise<Request>}
+ */
 export async function getRequest({ request, base, bodySizeLimit }) {
 	return new Request(base + request.url, {
 		// @ts-expect-error
 		duplex: 'half',
 		method: request.method,
 		headers: /** @type {Record<string, string>} */ (request.headers),
-		body: get_raw_body(request, bodySizeLimit)
+		body:
+			request.method === 'GET' || request.method === 'HEAD'
+				? undefined
+				: get_raw_body(request, bodySizeLimit)
 	});
 }
 
-/** @type {import('@sveltejs/kit/node').setResponse} */
+/**
+ * @param {import('http').ServerResponse} res
+ * @param {Response} response
+ * @returns {Promise<void>}
+ */
 export async function setResponse(res, response) {
 	for (const [key, value] of response.headers) {
 		try {
@@ -113,7 +130,7 @@ export async function setResponse(res, response) {
 					? set_cookie_parser.splitCookiesString(
 							// This is absurd but necessary, TODO: investigate why
 							/** @type {string}*/ (response.headers.get(key))
-					  )
+						)
 					: value
 			);
 		} catch (error) {
@@ -133,7 +150,7 @@ export async function setResponse(res, response) {
 	if (response.body.locked) {
 		res.end(
 			'Fatal error: Response body is locked. ' +
-				`This can happen when the response was already read (for example through 'response.json()' or 'response.text()').`
+				"This can happen when the response was already read (for example through 'response.json()' or 'response.text()')."
 		);
 		return;
 	}
@@ -176,4 +193,14 @@ export async function setResponse(res, response) {
 			cancel(error instanceof Error ? error : new Error(String(error)));
 		}
 	}
+}
+
+/**
+ * Converts a file on disk to a readable stream
+ * @param {string} file
+ * @returns {ReadableStream}
+ * @since 2.4.0
+ */
+export function createReadableStream(file) {
+	return /** @type {ReadableStream} */ (Readable.toWeb(createReadStream(file)));
 }

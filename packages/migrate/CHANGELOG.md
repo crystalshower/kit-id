@@ -1,5 +1,117 @@
 # svelte-migrate
 
+## 1.3.8
+
+### Patch Changes
+
+- chore(deps): update dependency ts-morph to v22 ([`4447269e979f2b5be18e0fded0b5843a6258542d`](https://github.com/sveltejs/kit/commit/4447269e979f2b5be18e0fded0b5843a6258542d))
+
+## 1.3.7
+
+### Patch Changes
+
+- fix: don't downgrade versions when bumping dependencies ([#11716](https://github.com/sveltejs/kit/pull/11716))
+
+## 1.3.6
+
+### Patch Changes
+
+- fix: correct link to docs ([#11407](https://github.com/sveltejs/kit/pull/11407))
+
+## 1.3.5
+
+### Patch Changes
+
+- chore: update primary branch from master to main ([`47779436c5f6c4d50011d0ef8b2709a07c0fec5d`](https://github.com/sveltejs/kit/commit/47779436c5f6c4d50011d0ef8b2709a07c0fec5d))
+
+## 1.3.4
+
+### Patch Changes
+
+- suggest running migrate command with latest if migration does not exist ([#11362](https://github.com/sveltejs/kit/pull/11362))
+
+## 1.3.3
+
+### Patch Changes
+
+- chore: insert package at sorted position ([#11332](https://github.com/sveltejs/kit/pull/11332))
+
+- fix: adjust cookie migration logic, note installation ([#11331](https://github.com/sveltejs/kit/pull/11331))
+
+## 1.3.2
+
+### Patch Changes
+
+- fix: handle jsconfig.json ([#11325](https://github.com/sveltejs/kit/pull/11325))
+
+## 1.3.1
+
+### Patch Changes
+
+- chore: fix broken migration links ([#11320](https://github.com/sveltejs/kit/pull/11320))
+
+## 1.3.0
+
+### Minor Changes
+
+- feat: add sveltekit v2 migration ([#11294](https://github.com/sveltejs/kit/pull/11294))
+
+## 1.2.8
+
+### Patch Changes
+
+- chore(deps): update dependency ts-morph to v21 ([#11181](https://github.com/sveltejs/kit/pull/11181))
+
+## 1.2.7
+
+### Patch Changes
+
+- chore(deps): update dependency ts-morph to v20 ([#10766](https://github.com/sveltejs/kit/pull/10766))
+
+## 1.2.6
+
+### Patch Changes
+
+- fix: do not downgrade versions ([#10352](https://github.com/sveltejs/kit/pull/10352))
+
+## 1.2.5
+
+### Patch Changes
+
+- fix: note old eslint plugin deprecation ([#10319](https://github.com/sveltejs/kit/pull/10319))
+
+## 1.2.4
+
+### Patch Changes
+
+- fix: ensure glob finds all files in folders ([#10230](https://github.com/sveltejs/kit/pull/10230))
+
+## 1.2.3
+
+### Patch Changes
+
+- fix: handle missing fields in migrate script ([#10221](https://github.com/sveltejs/kit/pull/10221))
+
+## 1.2.2
+
+### Patch Changes
+
+- fix: finalize svelte-4 migration ([#10195](https://github.com/sveltejs/kit/pull/10195))
+
+- fix: changed `index` to `index.d.ts` in `typesVersions` ([#10180](https://github.com/sveltejs/kit/pull/10180))
+
+## 1.2.1
+
+### Patch Changes
+
+- docs: update readme ([#10066](https://github.com/sveltejs/kit/pull/10066))
+
+## 1.2.0
+
+### Minor Changes
+
+- feat: add Svelte 4 migration ([#9729](https://github.com/sveltejs/kit/pull/9729))
+
 ## 1.1.3
 
 ### Patch Changes

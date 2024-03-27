@@ -69,19 +69,18 @@ const get_defaults = (prefix = '') => ({
 		csrf: {
 			checkOrigin: true
 		},
-		dangerZone: {
-			trackServerFetches: false
-		},
 		embedded: false,
 		env: {
 			dir: process.cwd(),
-			publicPrefix: 'PUBLIC_'
+			publicPrefix: 'PUBLIC_',
+			privatePrefix: ''
 		},
 		files: {
 			assets: join(prefix, 'static'),
 			hooks: {
 				client: join(prefix, 'src/hooks.client'),
-				server: join(prefix, 'src/hooks.server')
+				server: join(prefix, 'src/hooks.server'),
+				universal: join(prefix, 'src/hooks')
 			},
 			lib: join(prefix, 'src/lib'),
 			params: join(prefix, 'src/params'),
@@ -101,7 +100,7 @@ const get_defaults = (prefix = '') => ({
 		paths: {
 			base: '',
 			assets: '',
-			relative: undefined
+			relative: true
 		},
 		prerender: {
 			concurrency: 1,
@@ -297,8 +296,8 @@ test('fails if prerender.entries are invalid', () => {
 
 /**
  * @param {string} name
- * @param {import('types').KitConfig['paths']} input
- * @param {import('types').KitConfig['paths']} output
+ * @param {import('@sveltejs/kit').KitConfig['paths']} input
+ * @param {import('@sveltejs/kit').KitConfig['paths']} output
  */
 function validate_paths(name, input, output) {
 	test(name, () => {
@@ -320,7 +319,7 @@ validate_paths(
 	{
 		base: '/path/to/base',
 		assets: '',
-		relative: undefined
+		relative: true
 	}
 );
 
@@ -332,7 +331,7 @@ validate_paths(
 	{
 		base: '',
 		assets: 'https://cdn.example.com',
-		relative: undefined
+		relative: true
 	}
 );
 
@@ -345,7 +344,7 @@ validate_paths(
 	{
 		base: '/path/to/base',
 		assets: 'https://cdn.example.com',
-		relative: undefined
+		relative: true
 	}
 );
 

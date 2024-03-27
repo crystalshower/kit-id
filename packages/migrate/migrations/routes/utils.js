@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import ts from 'typescript';
 import MagicString from 'magic-string';
 import { comment, indent_at_line } from '../../utils.js';
@@ -138,7 +137,7 @@ export function get_object_nodes(node) {
 		} else if (ts.isShorthandPropertyAssignment(property)) {
 			obj[property.name.text] = property.name;
 		} else {
-			return null; // object contains funky stuff like computed properties/accessors — bail
+			return null; // object contains funky stuff like computed properties/accessors — bail
 		}
 	}
 
@@ -308,35 +307,6 @@ export function parse(content) {
 	}
 }
 
-/** @param {string} test_file */
-export function read_samples(test_file) {
-	const markdown = fs.readFileSync(new URL('./samples.md', test_file), 'utf8');
-	const samples = markdown
-		.split(/^##/gm)
-		.slice(1)
-		.map((block) => {
-			const description = block.split('\n')[0];
-			const before = /```(js|ts|svelte) before\n([^]*?)\n```/.exec(block);
-			const after = /```(js|ts|svelte) after\n([^]*?)\n```/.exec(block);
-
-			const match = /> file: (.+)/.exec(block);
-
-			return {
-				description,
-				before: before ? before[2] : '',
-				after: after ? after[2] : '',
-				filename: match?.[1],
-				solo: block.includes('> solo')
-			};
-		});
-
-	if (samples.some((sample) => sample.solo)) {
-		return samples.filter((sample) => sample.solo);
-	}
-
-	return samples;
-}
-
 /**
  * @param {ts.Node} node
  * @param {MagicString} code
@@ -345,7 +315,7 @@ export function read_samples(test_file) {
  */
 export function rewrite_type(node, code, old_type, new_type) {
 	// @ts-ignore
-	let jsDoc = node.jsDoc || node.parent?.parent?.parent?.jsDoc;
+	const jsDoc = node.jsDoc || node.parent?.parent?.parent?.jsDoc;
 	if (jsDoc) {
 		// @ts-ignore
 		for (const comment of jsDoc) {

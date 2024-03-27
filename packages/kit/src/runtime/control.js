@@ -1,4 +1,4 @@
-export let HttpError = class HttpError {
+export class HttpError {
 	/**
 	 * @param {number} status
 	 * @param {{message: string} extends App.Error ? (App.Error | string | undefined) : App.Error} body
@@ -17,9 +17,9 @@ export let HttpError = class HttpError {
 	toString() {
 		return JSON.stringify(this.body);
 	}
-};
+}
 
-export let Redirect = class Redirect {
+export class Redirect {
 	/**
 	 * @param {300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308} status
 	 * @param {string} location
@@ -28,21 +28,39 @@ export let Redirect = class Redirect {
 		this.status = status;
 		this.location = location;
 	}
-};
+}
+
+/**
+ * An error that was thrown from within the SvelteKit runtime that is not fatal and doesn't result in a 500, such as a 404.
+ * `SvelteKitError` goes through `handleError`.
+ * @extends Error
+ */
+export class SvelteKitError extends Error {
+	/**
+	 * @param {number} status
+	 * @param {string} text
+	 * @param {string} message
+	 */
+	constructor(status, text, message) {
+		super(message);
+		this.status = status;
+		this.text = text;
+	}
+}
 
 /**
  * @template {Record<string, unknown> | undefined} [T=undefined]
  */
-export let ActionFailure = class ActionFailure {
+export class ActionFailure {
 	/**
 	 * @param {number} status
-	 * @param {T} [data]
+	 * @param {T} data
 	 */
 	constructor(status, data) {
 		this.status = status;
 		this.data = data;
 	}
-};
+}
 
 /**
  * This is a grotesque hack that, in dev, allows us to replace the implementations
@@ -54,10 +72,16 @@ export let ActionFailure = class ActionFailure {
  *   ActionFailure: typeof ActionFailure;
  *   HttpError: typeof HttpError;
  *   Redirect: typeof Redirect;
+ *   SvelteKitError: typeof SvelteKitError;
  * }} implementations
  */
 export function replace_implementations(implementations) {
-	ActionFailure = implementations.ActionFailure;
-	HttpError = implementations.HttpError;
-	Redirect = implementations.Redirect;
+	// @ts-expect-error
+	ActionFailure = implementations.ActionFailure; // eslint-disable-line no-class-assign
+	// @ts-expect-error
+	HttpError = implementations.HttpError; // eslint-disable-line no-class-assign
+	// @ts-expect-error
+	Redirect = implementations.Redirect; // eslint-disable-line no-class-assign
+	// @ts-expect-error
+	SvelteKitError = implementations.SvelteKitError; // eslint-disable-line no-class-assign
 }

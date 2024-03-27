@@ -38,7 +38,7 @@ export function migrate_page(content, filename) {
 	}
 
 	const match = /__layout(?:-([^.@]+))?/.exec(filename);
-	const load_name = match?.[1] ? `LayoutLoad.${match[1]}` : match ? `LayoutLoad` : 'PageLoad';
+	const load_name = match?.[1] ? `LayoutLoad.${match[1]}` : match ? 'LayoutLoad' : 'PageLoad';
 
 	for (const statement of file.ast.statements) {
 		const fn = name ? get_function_node(statement, name) : undefined;
@@ -90,8 +90,8 @@ export function migrate_page(content, filename) {
 							const message = is_string_like(nodes.error)
 								? nodes.error.getText()
 								: is_new(nodes.error, 'Error')
-								? /** @type {string | undefined} */ (nodes.error.arguments[0]?.getText())
-								: false;
+									? /** @type {string | undefined} */ (nodes.error.arguments[0]?.getText())
+									: false;
 
 							if (message !== false) {
 								automigration(

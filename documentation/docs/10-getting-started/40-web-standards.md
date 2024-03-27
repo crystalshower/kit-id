@@ -27,8 +27,7 @@ Sebuah instance dari [`Response`](https://developer.mozilla.org/en-US/docs/Web/A
 
 ### Headers
 
-The [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) interface allows you to read incoming `request.headers` and set outgoing `response.headers`:
-Sebuah instance dari [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) memungkinkan kamu untuk membaca `request.headers` yang masuk dan mengatur `response.headers` yang keluar:
+The [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) interface allows you to read incoming `request.headers` and set outgoing `response.headers`. For example, you can get the `request.headers` as shown below, and use the [`json` convenience function](modules#sveltejs-kit-json) to send modified `response.headers`:
 
 ```js
 // @errors: 2461
@@ -36,13 +35,17 @@ Sebuah instance dari [`Headers`](https://developer.mozilla.org/en-US/docs/Web/AP
 import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
-export function GET(event) {
-	// log semua header
-	console.log(...event.request.headers);
+export function GET({ request }) {
+	// log all headers
+	console.log(...request.headers);
 
+	// create a JSON Response using a header we received
 	return json({
-		// dapatkan nilai header tertentu
-		userAgent: event.request.headers.get('user-agent')
+		// retrieve a specific header
+		userAgent: request.headers.get('user-agent')
+	}, {
+		// set a header on the response
+		headers: { 'x-custom-header': 'potato' }
 	});
 }
 ```

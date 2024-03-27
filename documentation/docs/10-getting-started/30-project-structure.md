@@ -18,7 +18,8 @@ my-project/
 │ ├ app.html
 │ ├ error.html
 │ ├ hooks.client.js
-│ └ hooks.server.js
+│ ├ hooks.server.js
+│ └ service-worker.js
 ├ static/
 │ └ [file-file static kamu]
 ├ tests/
@@ -46,13 +47,13 @@ Direktori `src` berisi inti dari proyek kamu. Semuanya kecuali `src/routes` dan 
   - `%sveltekit.body%` — markup untuk halaman yang di-render. Bagian ini harus berada di dalam `<div>` atau elemen lain, bukan langsung di dalam `<body>`, untuk mencegah bug yang disebabkan oleh ekstensi browser yang menyuntikkan elemen lalu dihancurkan saat proses _hydration_. SvelteKit akan memberi peringatan pada saat pengembangan jika hal ini terjadi
   - `%sveltekit.assets%` — [`paths.assets`](configuration#paths) jika ditentukan, atau path relatif ke [`paths.base`](configuration#paths)
   - `%sveltekit.nonce%` — sebuah [CSP](configuration#csp) nonce untuk link dan script yang dimasukkan secara manual jika digunakan
-  - `%sveltekit.env.[NAME]%` — akan diganti saat proses render dengan environment variable `[NAME]`, yang harus dimulai dengan [`publicPrefix`](https://kit.svelte.dev/docs/configuration#env) (biasanya `PUBLIC_`). Jika tidak cocok akan fallback ke `''`
+  - `%sveltekit.env.[NAME]%` — akan diganti saat proses render dengan environment variable `[NAME]`, yang harus dimulai dengan [`publicPrefix`](configuration#env) (biasanya `PUBLIC_`). Jika tidak cocok akan fallback ke `''`
 - `error.html` adalah halaman yang di-render ketika semuanya gagal. Halaman ini dapat berisi placeholder berikut:
   - `%sveltekit.status%` — kode status HTTP yang dihasilkan
   - `%sveltekit.error.message%` — pesan kesalahan yang dihasilkan
-- `hooks.client.js` berisi [hooks](/docs/hooks) client kamu
-- `hooks.server.js` berisi [hooks](/docs/hooks) server kamu
-- `service-worker.js` berisi [service worker](/docs/service-workers) kamu
+- `hooks.client.js` berisi [hooks](hooks) client kamu
+- `hooks.server.js` berisi [hooks](hooks) server kamu
+- `service-worker.js` berisi [service worker](service-workers) kamu
 
 (Kamu dapat memilih untuk menggunakan antara JavaScript dan TypeScript ketika kamu membuat proyek. Kamu dapat beralih antara JavaScript dan TypeScript di dokumentasi menggunakan toggle di bagian bawah halaman ini.)
 

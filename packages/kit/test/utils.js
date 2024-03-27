@@ -1,8 +1,8 @@
 import fs from 'node:fs';
-import path from 'node:path';
 import http from 'node:http';
-import { test as base, devices } from '@playwright/test';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { test as base, devices } from '@playwright/test';
 
 export const test = base.extend({
 	app: async ({ page }, use) => {
@@ -73,7 +73,7 @@ export const test = base.extend({
 		/** @param {string} selector */
 		async function in_view(selector) {
 			const box = await page.locator(selector).boundingBox();
-			const view = await page.viewportSize();
+			const view = page.viewportSize();
 			return box && view && box.y < view.height && box.y + box.height > 0;
 		}
 
@@ -118,6 +118,7 @@ export const test = base.extend({
 		await use(page);
 	},
 
+	// eslint-disable-next-line no-empty-pattern
 	read_errors: ({}, use) => {
 		/** @param {string} path */
 		function read_errors(path) {
@@ -130,6 +131,7 @@ export const test = base.extend({
 		use(read_errors);
 	},
 
+	// eslint-disable-next-line no-empty-pattern
 	start_server: async ({}, use) => {
 		/**
 		 * @type {http.Server}
@@ -201,7 +203,7 @@ export const test = base.extend({
 	// setup context
 	// teardown context
 	// teardown start_server
-	context: async function ({ context, start_server }, use) {
+	async context({ context, start_server }, use) {
 		// just here make sure start_server is referenced, don't call
 		if (!start_server) {
 			throw new Error('start_server fixture not present');
@@ -268,7 +270,7 @@ export const config = {
 		? [
 				['dot'],
 				[path.resolve(fileURLToPath(import.meta.url), '../github-flaky-warning-reporter.js')]
-		  ]
+			]
 		: 'list',
 	testDir: 'test',
 	testMatch: /(.+\.)?(test|spec)\.[jt]s/

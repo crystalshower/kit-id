@@ -4,13 +4,14 @@
 		"checkJs": true,
 		"noEmit": true,
 		"strict": true,
-		"target": "es2020",
+		"target": "es2022",
 		"module": "es2022",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
 		"paths": {
-			"@sveltejs/kit": ["../../../../../types/index"]
+			"@sveltejs/kit": ["../../../../exports/public"],
+			"types": ["../../../../types/internal"]
 		}
 	},
 	"include": ["./**/*.js"],
