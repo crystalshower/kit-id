@@ -21,19 +21,19 @@
 </script>
 
 <svelte:head>
-	<title>SvelteKit • Web development, streamlined</title>
+	<title>SvelteKit • Pengembangan web, yang sederhana</title>
 
 	<meta name="twitter:title" content="SvelteKit" />
-	<meta name="twitter:description" content="Web development, streamlined" />
-	<meta name="description" content="SvelteKit is the official Svelte application framework" />
+	<meta name="twitter:description" content="Pengembangan web, yang sederhana" />
+	<meta name="description" content="Terjemahan Bahasa Indonesia Dokumentasi SvelteKit" />
 
 	<meta property="og:type" content="website" />
-	<meta property="og:title" content="SvelteKit • Web development, streamlined" />
+	<meta property="og:title" content="SvelteKit • Pengembangan web, yang sederhana" />
 	<meta
 		property="og:description"
-		content="SvelteKit is the official Svelte application framework"
+		content="Terjemahan Bahasa Indonesia Dokumentasi SvelteKit"
 	/>
-	<meta property="og:url" content="https://kit.svelte.dev/" />
+	<meta property="og:url" content="https://sveltekit-id.vercel.app" />
 	<meta
 		property="og:image"
 		content="https://raw.githubusercontent.com/sveltejs/branding/master/svelte-logo.svg"

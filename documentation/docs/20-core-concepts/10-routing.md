@@ -76,7 +76,7 @@ Kamu dapat menemukan informasi lebih lanjut tentang ini di [halaman opsi](page-o
 
 ### +page.server.js
 
-Jika fungsi `load` kamu hanya dapat berjalan di _server_ — misalnya, jika perlu mengambil data dari database atau kamu perlu mengakses [variabel lingkungan](modules#$env-static-private) seperti kunci API — maka kamu dapat mengubah nama `+page.js` menjadi `+page.server.js` dan mengubah tipe `PageLoad` menjadi `PageServerLoad`.
+Jika kamu ingin menjalankan fungsi `load` di _server_ — misalnya, jika perlu mengambil data dari database atau kamu perlu mengakses [environment variable](modules#$env-static-private) seperti API key — maka kamu dapat mengubah nama `+page.js` menjadi `+page.server.js` dan mengubah tipe `PageLoad` menjadi `PageServerLoad`.
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -185,7 +185,6 @@ Ketika kita membuat halaman untuk `/`, `/tentang` dan `/pengaturan`...
 Layout juga dapat _ditumpuk_. Misalkan kita tidak hanya memiliki satu halaman `/pengaturan`, tetapi sebaliknya memiliki halaman tumpuk seperti `/pengaturan/profil` dan `/pengaturan/notifikasi` dengan submenu bersama (untuk contoh nyata, lihat [github.com/settings](https://github.com/settings)).
 
 Kita dapat membuat Layout yang hanya berlaku untuk halaman di bawah `/pengaturan` (sambil mewarisi tata letak akar dengan navigasi tingkat atas):
-We can create a layout that only applies to pages below `/settings` (while inheriting the root layout with the top-level nav):
 
 ```svelte
 <!--- file: src/routes/settings/+layout.svelte --->
@@ -210,8 +209,7 @@ Kamu dapat melihat bagaimana `data` diisi dengan melihat contoh `+layout.js` di 
 Secara default, setiap _layout_ mewarisi _layout_ di atasnya. Terkadang hal itu bukan yang kamu inginkan - dalam hal ini, [tata letak lanjutan](advanced-routing#advanced-layouts) dapat membantu kamu.
 
 ### +layout.js
-
-Just like `+page.svelte` loading data from `+page.js`, your `+layout.svelte` component can get data from a [`load`](load) function in `+layout.js`.
+Seperti `+page.svelte` yang memuat data dari `+page.js`, komponen `+layout.svelte` kamu mendapatkan data dari fungsi [`load`](load) di `+layout.js`.
 
 ```js
 /// file: src/routes/settings/+layout.js
@@ -226,9 +224,9 @@ export function load() {
 }
 ```
 
-If a `+layout.js` exports [page options](page-options) — `prerender`, `ssr` and `csr` — they will be used as defaults for child pages.
+Jika `+layout.js` mengekspor [opsi halaman](page-options) — `prerender`, `ssr` dan `csr` — mereka akan digunakan secara default untuk halaman turunannya.
 
-Data returned from a layout's `load` function is also available to all its child pages:
+Data yang dikembalikan dari fungsi `load` layout juga tersedia untuk semua halaman turunannya:
 
 ```svelte
 <!--- file: src/routes/settings/profile/+page.svelte --->
@@ -240,19 +238,21 @@ Data returned from a layout's `load` function is also available to all its child
 </script>
 ```
 
-> Often, layout data is unchanged when navigating between pages. SvelteKit will intelligently rerun [`load`](load) functions when necessary.
+> Sering kali, data _layout_ tidak berubah ketika menavigasi antar halaman. SvelteKit akan secara cerdas menjalankan kembali fungsi [`load`](load) bila diperlukan.
 
 ### +layout.server.js
 
-To run your layout's `load` function on the server, move it to `+layout.server.js`, and change the `LayoutLoad` type to `LayoutServerLoad`.
+Untuk menjalankan fungsi `load` _layout_ kamu di _server_, pindahkan ke `+layout.server.js`, dan ubah tipe `LayoutLoad` menjadi `LayoutServerLoad`.
 
-Like `+layout.js`, `+layout.server.js` can export [page options](page-options) — `prerender`, `ssr` and `csr`.
+Seperti `+layout.js`, `+layout.server.js` dapat mengekspor [opsi halaman](page-options) — `prerender`, `ssr` dan `csr`.
 
 ## +server
 
 As well as pages, you can define routes with a `+server.js` file (sometimes referred to as an 'API route' or an 'endpoint'), which gives you full control over the response. Your `+server.js` file exports functions corresponding to HTTP verbs like `GET`, `POST`, `PATCH`, `PUT`, `DELETE`, `OPTIONS`, and `HEAD` that take a `RequestEvent` argument and return a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
+Layaknya sebuah halaman (+page), kamu juga bisa menambahkan rute dengan file `+server.js` (kadang disebut 'rute API' atau 'endpoint'), yang memberikan kontrol penuh atas suatu _response_. File `+server.js` kamu mengekspor fungsi yang sesuai dengan kata kerja HTTP seperti `GET`, `POST`, `PATCH`, `PUT`, `DELETE`, `OPTIONS`, dan `HEAD` yang mengambil argumen `RequestEvent` dan mengembalikan objek [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response).
 
 For example we could create an `/api/random-number` route with a `GET` handler:
+Berikut adalah contoh membuat rute `/api/random-number` dengan handler `GET`:
 
 ```js
 /// file: src/routes/api/random-number/+server.js
@@ -275,17 +275,20 @@ export function GET({ url }) {
 }
 ```
 
-The first argument to `Response` can be a [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream), making it possible to stream large amounts of data or create server-sent events (unless deploying to platforms that buffer responses, like AWS Lambda).
+Argumen pertama yang bisa diberikan ke `Response` bisa berupa [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) yang dapat digunakan untuk streaming data dalam jumlah besar atau membuat server-sent events (kecuali saat dideploy ke platform yang mem-buffer respon, seperti AWS Lambda).
 
-You can use the [`error`](modules#sveltejs-kit-error), [`redirect`](modules#sveltejs-kit-redirect) and [`json`](modules#sveltejs-kit-json) methods from `@sveltejs/kit` for convenience (but you don't have to).
+Kamu bisa menggunakan metode [`error`](modules#sveltejs-kit-error), [`redirect`](modules#sveltejs-kit-redirect) dan [`json`](modules#sveltejs-kit-json) dari `@sveltejs/kit` untuk kemudahan (tapi tidak harus kok).
 
-If an error is thrown (either `error(...)` or an unexpected error), the response will be a JSON representation of the error or a fallback error page — which can be customised via `src/error.html` — depending on the `Accept` header. The [`+error.svelte`](#error) component will _not_ be rendered in this case. You can read more about error handling [here](errors).
 
-> When creating an `OPTIONS` handler, note that Vite will inject `Access-Control-Allow-Origin` and `Access-Control-Allow-Methods` headers — these will not be present in production unless you add them.
+Jika terjadi kesalahan (baik `error(...)` atau kesalahan yang tidak terduga), respon akan mengirim representasi JSON dari kesalahan atau halaman kesalahan cadangan — yang dapat disesuaikan melalui `src/error.html` — tergantung pada header `Accept`. Komponen [`+error.svelte`](#error) _tidak_ akan dirender dalam kasus ini. Kamu bisa membaca lebih lanjut tentang penanganan kesalahan [di sini](errors).
 
-### Receiving data
+> Saat membuat handler `OPTIONS`, perhatikan bahwa Vite akan menyuntikkan header `Access-Control-Allow-Origin` dan `Access-Control-Allow-Methods`. Pada produksi, header tersebut tidak akan ada kecuali kamu yang menambahkannya.
+
+### Menerima data
 
 By exporting `POST`/`PUT`/`PATCH`/`DELETE`/`OPTIONS`/`HEAD` handlers, `+server.js` files can be used to create a complete API:
+Dengan mengekspor handler `POST`/`PUT`/`PATCH`/`DELETE`/`OPTIONS`/`HEAD`, file `+server.js` bisa digunakan untuk membuat API yang lengkap:
+
 
 ```svelte
 <!--- file: src/routes/add/+page.svelte --->
@@ -325,13 +328,13 @@ export async function POST({ request }) {
 }
 ```
 
-> In general, [form actions](form-actions) are a better way to submit data from the browser to the server.
+> Umumnya, [form actions](form-actions) adalah cara yang lebih baik untuk mengirimkan data dari browser ke server.
 
-> If a `GET` handler is exported, a `HEAD` request will return the `content-length` of the `GET` handler's response body.
+> Jika handler `GET` diekspor, permintaan `HEAD` akan mengembalikan `content-length` dari _body_ respon handler `GET`.
 
 ### Fallback method handler
 
-Exporting the `fallback` handler will match any unhandled request methods, including methods like `MOVE` which have no dedicated export from `+server.js`.
+Mengekspor handler `fallback` akan mencocokkan semua metode permintaan yang tidak ditangani, termasuk metode seperti `MOVE` yang tidak memiliki ekspor khusus dari `+server.js`.
 
 ```js
 // @errors: 7031
@@ -350,21 +353,20 @@ export async function fallback({ request }) {
 }
 ```
 
-> For `HEAD` requests, the `GET` handler takes precedence over the `fallback` handler.
+> Untuk permintaan `HEAD`, handler `GET` lebih diutamakan daripada handler `fallback`.
+### Negosiasi konten
 
-### Content negotiation
+file `+server.js` dapat ditempatkan di direktori yang sama dengan file `+page`. Yang mana dapat digunakan untuk membuat rute yang sama menjadi halaman atau _endpoint_ API. Untuk menentukan yang mana, SvelteKit menerapkan aturan berikut:
 
-`+server.js` files can be placed in the same directory as `+page` files, allowing the same route to be either a page or an API endpoint. To determine which, SvelteKit applies the following rules:
-
-- `PUT`/`PATCH`/`DELETE`/`OPTIONS` requests are always handled by `+server.js` since they do not apply to pages
-- `GET`/`POST`/`HEAD` requests are treated as page requests if the `accept` header prioritises `text/html` (in other words, it's a browser page request), else they are handled by `+server.js`.
-- Responses to `GET` requests will include a `Vary: Accept` header, so that proxies and browsers cache HTML and JSON responses separately.
+- Permintaan `PUT`/`PATCH`/`DELETE`/`OPTIONS` selalu ditangani oleh `+server.js` karena tidak berlaku untuk halaman
+- Permintaan `GET`/`POST`/`HEAD` dianggap sebagai permintaan halaman jika header `accept` memprioritaskan `text/html` (dengan kata lain, itu adalah permintaan halaman browser), jika tidak, mereka ditangani oleh `+server.js`.
+- Respon terhadap permintaan `GET` akan menyertakan header `Vary: Accept`, sehingga _proxies_ dan browser akan menyimpan _response_ HTML dan JSON secara terpisah.
 
 ## $types
 
-Throughout the examples above, we've been importing types from a `$types.d.ts` file. This is a file SvelteKit creates for you in a hidden directory if you're using TypeScript (or JavaScript with JSDoc type annotations) to give you type safety when working with your root files.
+Sepanjang contoh di atas, kita telah mengimpor tipe dari file `$types.d.ts`. File itu dibuat oleh SvelteKit untuk kamu di direktori tersembunyi jika kamu menggunakan TypeScript (atau JavaScript dengan anotasi tipe JSDoc) untuk memberikan keamanan tipe saat bekerja dengan file akar kamu.
 
-For example, annotating `export let data` with `PageData` (or `LayoutData`, for a `+layout.svelte` file) tells TypeScript that the type of `data` is whatever was returned from `load`:
+Contohnya, menandai `export let data` dengan `PageData` (atau `LayoutData`, untuk file `+layout.svelte`) memberitahu TypeScript bahwa tipe dari `data` adalah apa pun yang dikembalikan dari `load`:
 
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
@@ -374,19 +376,17 @@ For example, annotating `export let data` with `PageData` (or `LayoutData`, for 
 </script>
 ```
 
-In turn, annotating the `load` function with `PageLoad`, `PageServerLoad`, `LayoutLoad` or `LayoutServerLoad` (for `+page.js`, `+page.server.js`, `+layout.js` and `+layout.server.js` respectively) ensures that `params` and the return value are correctly typed.
+Selanjutnya, menandai `export function load` dengan `PageLoad`, `PageServerLoad`, `LayoutLoad` atau `LayoutServerLoad` (untuk `+page.js`, `+page.server.js`, `+layout.js` dan `+layout.server.js` secara berturut-turut) memastikan bahwa `params` dan nilai yang dikembalikan memiliki tipe yang benar.
 
-If you're using VS Code or any IDE that supports the language server protocol and TypeScript plugins then you can omit these types _entirely_! Svelte's IDE tooling will insert the correct types for you, so you'll get type checking without writing them yourself. It also works with our command line tool `svelte-check`.
-
-You can read more about omitting `$types` in our [blog post](https://svelte.dev/blog/zero-config-type-safety) about it.
+Kamu dapat membacanya lebih lanjut tentang cara menghilangkan `$types` di [postingan blog](https://svelte.dev/blog/zero-config-type-safety) kami tentang hal itu.
 
 ## Other files
 
-Any other files inside a route directory are ignored by SvelteKit. This means you can colocate components and utility modules with the routes that need them.
+File lain di dalam direktori rute akan diabaikan oleh SvelteKit. Dengan demikian, kamu dapat menempatkan komponen dan modul utilitas dengan rute yang membutuhkannya.
 
-If components and modules are needed by multiple routes, it's a good idea to put them in [`$lib`](modules#$lib).
+Jika komponen dan modul dibutuhkan oleh beberapa rute, sebaiknya letakkan di dalam [`$lib`](modules#$lib).
 
-## Further reading
+## Bacaan lebih lanjut
 
 - [Tutorial: Routing](https://learn.svelte.dev/tutorial/pages)
 - [Tutorial: API routes](https://learn.svelte.dev/tutorial/get-handlers)

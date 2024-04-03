@@ -19,7 +19,7 @@
 					rel="noreferrer"
 					href="https://www.offerzen.com/community/svelte-origins-documentary"
 				>
-					Tonton dokumenter Svelte Origins secara penuh.
+					Tonton dokumenter Svelte Origins selengkapnya.
 				</a>
 			</p>
 		</div>

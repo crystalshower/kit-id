@@ -10,8 +10,8 @@
 				<Logotype />
 			</div>
 
-			<div class="tagline">Pengembangan web, disederhanakan</div>
-			<a href="{base}/docs/introduction" class="cta"> baca dokumentasinya </a>
+			<div class="tagline">Pengembangan web, yang sederhana</div>
+			<a href="{base}/docs/introduction" class="cta"> baca dokumentasi (wip) </a>
 		</div>
 
 		<div class="hero-image-wrapper">
