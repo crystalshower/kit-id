@@ -71,7 +71,6 @@ Jika saat kamu membuat proyek lalu kamu menambahkan [Playwright](https://playwri
 
 `package.json` kamu harus mencakup `@sveltejs/kit`, `svelte` dan `vite` sebagai `devDependencies`.
 
-When you create a project with `npm create svelte@latest`, you'll also notice that `package.json` includes `"type": "module"`. This means that `.js` files are interpreted as native JavaScript modules with `import` and `export` keywords. Legacy CommonJS files need a `.cjs` file extension.
 Saat kamu membuat proyek dengan `npm create svelte@latest`, kamu akan melihat bahwa `package.json` mencakup `"type": "module"`. Ini berarti file `.js` akan diinterpretasikan sebagai native JavaScript modules dengan kata kunci `import` dan `export`. File CommonJS legacy membutuhkan ekstensi file `.cjs`.
 
 ### svelte.config.js
@@ -80,7 +79,7 @@ File ini berisi konfigurasi Svelte dan SvelteKit kamu [configuration](configurat
 
 ### tsconfig.json
 
-File ini (atau `jsconfig.json`, jika kamu lebih suka file `.js` yang type-checked daripada file `.ts`) adalah file konfigurasi TypeScript yang kamu tambahkan saat menjalankan `npm create svelte@latest`. 
+File ini (atau `jsconfig.json`, jika kamu lebih suka file `.js` yang type-checked daripada file `.ts`) adalah file konfigurasi TypeScript yang kamu tambahkan saat menjalankan `npm create svelte@latest`.
 
 Karena SvelteKit bergantung pada konfigurasi tertentu yang diatur dengan cara tertentu, SvelteKit akan menghasilkan file `.svelte-kit/tsconfig.json` yang konfigurasinya akan di-`extend` oleh konfigurasi kamu sendiri.
 
@@ -93,4 +92,3 @@ Proyek SvelteKit sebenarnya hanyalah proyek [Vite](https://vitejs.dev) yang meng
 ### .svelte-kit
 
 Selama kamu mengembangkan dan membangun proyek kamu, SvelteKit akan menghasilkan file di direktori `.svelte-kit` (dapat dikonfigurasi sebagai [`outDir`](configuration#outdir)). Kamu dapat mengabaikan isinya, dan menghapusnya kapan saja, namun direktori tersebut akan dibuat kembali ketika kamu menjalakan `dev` atau `build`.
-

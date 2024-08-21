@@ -1,12 +1,12 @@
 ---
-title: Loading data
+title: Memuat data
 ---
 
-Before a [`+page.svelte`](routing#page-page-svelte) component (and its containing [`+layout.svelte`](routing#layout-layout-svelte) components) can be rendered, we often need to get some data. This is done by defining `load` functions.
+Sebelum komponen [`+page.svelte`](routing#page-page-svelte) (dan komponen [`+layout.svelte`](routing#layout-layout-svelte) yang mengandungnya) dapat dirender, kita seringkali perlu mendapatkan beberapa data. Hal ini dilakukan dengan mendefinisikan fungsi `load`.
 
 ## Page data
 
-A `+page.svelte` file can have a sibling `+page.js` that exports a `load` function, the return value of which is available to the page via the `data` prop:
+File `+page.svelte` dapat memiliki saudara `+page.js` yang mengekspor fungsi `load`, nilai kembalian dari fungsi tersebut tersedia untuk halaman melalui prop `data`:
 
 ```js
 /// file: src/routes/blog/[slug]/+page.js
@@ -14,8 +14,8 @@ A `+page.svelte` file can have a sibling `+page.js` that exports a `load` functi
 export function load({ params }) {
 	return {
 		post: {
-			title: `Title for ${params.slug} goes here`,
-			content: `Content for ${params.slug} goes here`
+			title: `Judul untuk ${params.slug} ada di sini`,
+			content: `Konten untuk ${params.slug} ada di sini`
 		}
 	};
 }
@@ -32,11 +32,11 @@ export function load({ params }) {
 <div>{@html data.post.content}</div>
 ```
 
-Thanks to the generated `$types` module, we get full type safety.
+Terima kasih pada modul yang dihasilkan `$types`, kita mendapatkan keamanan tipe data penuh.
 
-A `load` function in a `+page.js` file runs both on the server and in the browser (unless combined with `export const ssr = false`, in which case it will [only run in the browser](https://kit.svelte.dev/docs/page-options#ssr)). If your `load` function should _always_ run on the server (because it uses private environment variables, for example, or accesses a database) then it would go in a `+page.server.js` instead.
+Fungsi `load` dalam file `+page.js` berjalan di server dan di browser (kecuali digabungkan dengan `export const ssr = false`, dalam hal ini akan [hanya berjalan di browser](https://kit.svelte.dev/docs/page-options#ssr)). Jika fungsi `load` kamu _wajib_ berjalan di server (karena menggunakan variabel lingkungan pribadi, misalnya, atau mengakses database) maka akan ditempatkan di `+page.server.js` sebagai gantinya.
 
-A more realistic version of your blog post's `load` function, that only runs on the server and pulls data from a database, might look like this:
+Versi yang lebih realistis dari fungsi `load` posting blog kamu, yang hanya berjalan di server dan mengambil data dari database, mungkin terlihat seperti ini:
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -57,11 +57,11 @@ export async function load({ params }) {
 }
 ```
 
-Notice that the type changed from `PageLoad` to `PageServerLoad`, because server `load` functions can access additional arguments. To understand when to use `+page.js` and when to use `+page.server.js`, see [Universal vs server](load#universal-vs-server).
+Perhatikan bahwa tipe berubah dari `PageLoad` menjadi `PageServerLoad`, karena fungsi server `load` dapat mengakses argumen tambahan. Untuk memahami kapan menggunakan `+page.js` dan kapan menggunakan `+page.server.js`, lihat [Universal vs server](load#universal-vs-server).
 
 ## Layout data
 
-Your `+layout.svelte` files can also load data, via `+layout.js` or `+layout.server.js`.
+File `+layout.svelte` kamu dapat juga memuat data, melalui `+layout.js` atau `+layout.server.js`.
 
 ```js
 /// file: src/routes/blog/[slug]/+layout.server.js
@@ -95,7 +95,7 @@ export async function load() {
 </main>
 
 <aside>
-	<h2>More posts</h2>
+	<h2>Postingan lainnya</h2>
 	<ul>
 		{#each data.posts as post}
 			<li>
@@ -108,7 +108,7 @@ export async function load() {
 </aside>
 ```
 
-Data returned from layout `load` functions is available to child `+layout.svelte` components and the `+page.svelte` component as well as the layout that it 'belongs' to.
+Data yang dikembalikan dari fungsi `load` layout tersedia untuk komponen anak `+layout.svelte` dan komponen `+page.svelte` serta layout yang 'dimiliki' olehnya.
 
 ```diff
 /// file: src/routes/blog/[slug]/+page.svelte
@@ -118,8 +118,8 @@ Data returned from layout `load` functions is available to child `+layout.svelte
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-+	// we can access `data.posts` because it's returned from
-+	// the parent layout `load` function
++ // Kita bisa mengakses `data.posts` karena itu dikembalikan dari
++ // induk fungsi layout `load`
 +	$: index = data.posts.findIndex(post => post.slug === $page.params.slug);
 +	$: next = data.posts[index - 1];
 </script>
@@ -132,13 +132,13 @@ Data returned from layout `load` functions is available to child `+layout.svelte
 +{/if}
 ```
 
-> If multiple `load` functions return data with the same key, the last one 'wins' — the result of a layout `load` returning `{ a: 1, b: 2 }` and a page `load` returning `{ b: 3, c: 4 }` would be `{ a: 1, b: 3, c: 4 }`.
+> Jika ada beberapa fungsi `load` yang mengembalikan data dengan _key_ yang sama, yang akan dikembalikan adalah yang 'terakhir' — hasil dari layout `load` yang mengembalikan `{ a: 1, b: 2 }` dan halaman `load` yang mengembalikan `{ b: 3, c: 4 }` akan menjadi `{ a: 1, b: 3, c: 4 }`.
 
 ## $page.data
 
-The `+page.svelte` component, and each `+layout.svelte` component above it, has access to its own data plus all the data from its parents.
+Komponen `+page.svelte`, dan setiap komponen `+layout.svelte` di atasnya, memiliki akses ke data sendiri ditambah semua data dari induknya.
 
-In some cases, we might need the opposite — a parent layout might need to access page data or data from a child layout. For example, the root layout might want to access a `title` property returned from a `load` function in `+page.js` or `+page.server.js`. This can be done with `$page.data`:
+Pada beberapa kasus, kita mungkin memerlukan yang sebaliknya — indux layout mungkin perlu mengakses data halaman atau data dari anak layout. Misalnya, layout akar ingin mengakses properti `title` yang dikembalikan dari fungsi `load` di `+page.js` atau `+page.server.js`. Hal ini dapat dilakukan dengan `$page.data`:
 
 ```svelte
 <!--- file: src/routes/+layout.svelte --->
