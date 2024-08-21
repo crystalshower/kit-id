@@ -4,7 +4,8 @@ title: Standar Web
 
 Sepanjang dokumentasi ini, kamu akan melihat referensi ke [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API) standar yang SvelteKit bangun di atasnya. Daripada membuatnya lagi, kami _menggunakan platform_, yang berarti keterampilan pengembangan web yang kamu miliki saat ini dapat diterapkan ke SvelteKit. Sebaliknya, waktu yang dihabiskan untuk mempelajari SvelteKit akan membantu kamu menjadi pengembang web yang lebih baik di tempat lain.
 
-API-API ini tersedia pada semua browser modern dan non-browser environments seperti Cloudflare Workers, Deno dan Vercel Edge Functions. Selama tahap pengembangan dan saat menggunakan adapters untuk environment yang berbasis Node (termasuk AWS Lambda), jika diperlukan, polyfills disediakan untuk mengakomodasi dukungan standar web yang lebih banyak pada Node yang terus berkembang saat ini.
+These APIs are available in all modern browsers and in many non-browser environments like Cloudflare Workers, Deno and Vercel Edge Functions. During development, and in [adapters](adapters) for Node-based environments (including AWS Lambda), they're made available via polyfills where necessary (for now, that is — Node is rapidly adding support for more web standards).
+API-API ini tersedia pada semua browser modern dan non-browser environments seperti Cloudflare Workers, Deno dan Vercel Edge Functions. Selama tahap pengembangan dan saat menggunakan [adapters](adapters) untuk environment yang berbasis Node (termasuk AWS Lambda), jika diperlukan, polyfills menyediakannya.(Namun untuk saat ini, hanya Node yang terus berkembang pesat saat ini mengenai standar web).
 
 Secara khusus, kamu akan menjadi nyaman dengan hal-hal berikut:
 
